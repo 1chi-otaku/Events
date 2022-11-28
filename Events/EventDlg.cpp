@@ -64,6 +64,7 @@ DWORD WINAPI Thread2(LPVOID lp)
 	// получим дескриптор существующего события
 	HANDLE hEvent = OpenEvent(EVENT_ALL_ACCESS, 0, TEXT("{ECA57A59-2BD7-4fb5-A132-7A00944F7CEF}"));
 	ifstream in(TEXT("array.txt"));
+	ofstream out(TEXT("result.txt"));
 	if (!in.is_open())
 	{
 		return 1;
@@ -76,8 +77,10 @@ DWORD WINAPI Thread2(LPVOID lp)
 		{
 			in >> B[i];
 			sum += B[i];
+			out << B[i] << ' ';
 		}
 		in.close();
+		out.close();
 		MessageBox(0, TEXT("Поток прочитал информацию из файла"), TEXT("Критическая секция"), MB_OK);
 		TCHAR str[30];
 		wsprintf(str, TEXT("Сумма чисел равна %d"), sum);
